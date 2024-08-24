@@ -24,7 +24,7 @@ function Cinema() {
   // Fetch cinema data and initialize filter options
   const getCinemaData = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/allcinemarecord`);
+      const res = await axios.get(`https://mediamanserver.onrender.com/api/allcinemarecord`);
       if (res.status === 200) {
         const data = res.data.data;
         const uniqueChains = [...new Set(data.map(item => item.cinemaChain))];

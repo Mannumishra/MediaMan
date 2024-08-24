@@ -76,7 +76,7 @@ function Cart() {
             type: item.type || "cinema",
           })),
         };
-        await axios.post("http://localhost:8000/api/cinemaCart", cinemaData);
+        await axios.post("https://mediamanserver.onrender.com/api/cinemaCart", cinemaData);
       }
 
       if (hoadingItems.length > 0) {
@@ -100,7 +100,7 @@ function Cart() {
           })),
         };
         console.log(hoadingData); // Debug log
-        await axios.post("http://localhost:8000/api/hoadingcart", hoadingData);
+        await axios.post("https://mediamanserver.onrender.com/api/hoadingcart", hoadingData);
       }
       
       localStorage.removeItem("cartItems");
