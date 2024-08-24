@@ -1,0 +1,270 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import rating from '../../Image/rating.png';
+import spendcinema from '../../Image/spending.png';
+import "../Cinema/cinema.css";
+import toast from "react-hot-toast";
+
+function OutdoorHording() {
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // State variables for filters
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedMedia, setSelectedMedia] = useState("");
+
+  const getApiData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/hoading");
+      if (res.status === 200) {
+        setData(res.data.data.reverse());
+        setFilteredData(res.data.data.reverse());
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getApiData();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartItems(storedCartItems);
+
+    const storedCartCount = localStorage.getItem('cartCount');
+    if (storedCartCount) {
+      setCartCount(parseInt(storedCartCount, 10));
+    }
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    let filtered = data;
+
+    if (selectedState) {
+      filtered = filtered.filter(item => item.state === selectedState);
+    }
+
+    if (selectedCity) {
+      filtered = filtered.filter(item => item.city === selectedCity);
+    }
+
+    if (selectedMedia) {
+      filtered = filtered.filter(item => item.media === selectedMedia);
+    }
+
+    setFilteredData(filtered);
+    setLoading(false);
+  }, [selectedState, selectedCity, selectedMedia, data]);
+
+  const addToCart = (item) => {
+    const updatedCartItems = [...cartItems];
+    const existingCinemaItem = updatedCartItems.find(cartItem => cartItem.type === 'cinema');
+    const existingOutdoorItem = updatedCartItems.find(cartItem => cartItem.type === 'outdoor');
+
+    if (item.type === 'cinema' && existingOutdoorItem) {
+      toast.error('You cannot add Cinema products while Outdoor Hording products are in the cart.');
+      return;
+    }
+
+    if (item.type === 'outdoor' && existingCinemaItem) {
+      toast.error('You cannot add Outdoor Hording products while Cinema products are in the cart.');
+      return;
+    }
+
+    const existingItemIndex = updatedCartItems.findIndex(cartItem => cartItem._id === item._id);
+
+    if (existingItemIndex !== -1) {
+      updatedCartItems[existingItemIndex].quantity += 1;
+      toast.error("Item already in cart. Quantity increased.")
+    } else {
+      updatedCartItems.push({ ...item, quantity: 1 });
+      toast.success('Item added to cart.');
+    }
+
+    setCartItems(updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+
+    const newCartCount = updatedCartItems.reduce((acc, cur) => acc + cur.quantity, 0);
+    setCartCount(newCartCount);
+    localStorage.setItem('cartCount', newCartCount);
+
+    // setTimeout(() => {
+    //   window.location.reload()
+    // }, 1000);
+  };
+
+  const isItemInCart = (itemId) => {
+    return cartItems.some(cartItem => cartItem._id === itemId);
+  };
+
+  const truncateTitle = (title) => {
+    if (!title) {
+      return '';
+    }
+    const words = title.split(' ');
+    if (words.length > 20) {
+      return `${words.slice(0, 5).join(' ')}...`;
+    }
+    return title;
+  };
+
+  return (
+    <>
+      <div>
+        <div className="container mt-5">
+          <div className="row">
+            <div className="col-md-6" style={{ alignItems: "center" }}>
+              <div className="filter">
+                {/* <h3 style={{ color: "red", textAlign: "start" }}>
+                  Outdoor <span style={{ color: "black" }}> Hoardings</span>
+                </h3> */}
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div
+                onClick={() => setIsFilterVisible(!isFilterVisible)}
+                style={{ textAlign: "end", cursor: "pointer" }}
+              >
+                <p className="addbutton" style={{ display: "flex", justifyContent: "end" }}>
+                  <button className="cssbuttons-io">
+                    <span>Filter</span>
+                  </button>
+                </p>
+              </div>
+            </div>
+            {isFilterVisible && (
+              <div className="col-md-12">
+                <div className="filteration mb-3">
+                  <div>
+                    <label
+                      htmlFor="stateSelect"
+                      style={{ fontSize: "14px", color: "black" }}
+                      className="form-label"
+                    >
+                      Select State
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="State select"
+                      value={selectedState}
+                      onChange={(e) => setSelectedState(e.target.value)}
+                    >
+                      <option value="">Select State</option>
+                      {[...new Set(data.map(item => item.state))].map((state, index) => (
+                        <option key={index} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="citySelect"
+                      style={{ fontSize: "14px", color: "black" }}
+                      className="form-label"
+                    >
+                      Select City
+                    </label>
+                    <select
+                      id="citySelect"
+                      className="form-select"
+                      value={selectedCity}
+                      onChange={(e) => setSelectedCity(e.target.value)}
+                    >
+                      <option value="">Select City</option>
+                      {[...new Set(data.map(item => item.city))].map((city, index) => (
+                        <option key={index} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="mediaSelect"
+                      style={{ fontSize: "14px", color: "black" }}
+                      className="form-label"
+                    >
+                      Select Media
+                    </label>
+                    <select
+                      id="mediaSelect"
+                      className="form-select"
+                      value={selectedMedia}
+                      onChange={(e) => setSelectedMedia(e.target.value)}
+                    >
+                      <option value="">Select Media</option>
+                      {[...new Set(data.map(item => item.media))].map((media, index) => (
+                        <option key={index} value={media}>
+                          {media}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )}
+            <hr style={{ margin: '5px' }} />
+            {loading ? (
+              <div className="text-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : (
+              filteredData.map((item, index) => (
+                <div className="col-md-3 mb-4" key={index}>
+                  <div className="cinema-card">
+                    <img src={item.image} alt="Outdoor Hording" />
+                    <div>
+                      <h4>{truncateTitle(item.media)}</h4>
+                      <h6>{truncateTitle(item.location)}</h6>
+                      <hr style={{ margin: '5px' }} />
+                      <p className="person">
+                        <img src={rating} alt="rating" /> &nbsp; &nbsp;Location : {item.city} 
+                      </p>
+                      <p className="person">
+                        <img src={rating} alt="rating" /> &nbsp; &nbsp;Size : {item.height}H , {item.width}W 
+                      </p>
+                      <p className="person">
+                        <img src={spendcinema} alt="price" />&nbsp; &nbsp;Price : ₹{item.total}
+                      </p>
+                      <p className="addbutton">
+                        {isItemInCart(item._id) ? (
+                          <button className="cssbuttons-io" disabled>
+                            <span>Already In Cart</span>
+                          </button>
+                        ) : (
+                          <button className="cssbuttons-io" onClick={() => addToCart({ ...item, type: 'outdoor' })}>
+                            <span>
+                              Add To Cart &nbsp;
+                              <i className="bi bi-cart4"></i>
+                            </span>
+                          </button>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default OutdoorHording;
