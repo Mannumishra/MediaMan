@@ -1,135 +1,132 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import radio1 from "../../Image/radio.jpeg";
-import radio2 from "../../Image/radio1.jpg";
-import radio3 from "../../Image/radio2.webp";
-import radio4 from "../../Image/radio.jpeg";
-import radio5 from "../../Image/radio1.jpg";
-import radio6 from "../../Image/radio2.webp";
-import location from '../../Image/location.png'
-import spendcinema from '../../Image/spending.png'
+import location from '../../Image/location.png';
+import spendcinema from '../../Image/spending.png';
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function RadioAdvertisement() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [data, setData] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    getApiData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartItems(storedCartItems);
+
+    const storedCartCount = localStorage.getItem('cartCount');
+    if (storedCartCount) {
+      setCartCount(parseInt(storedCartCount, 10));
+    }
+  }, []);
+
+  const getApiData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/allradio");
+      if (res.status === 200) {
+        const fetchedData = res.data.data.reverse();
+        setData(fetchedData);
+        const uniqueStates = [...new Set(fetchedData.map(item => item.state))];
+        setStates(uniqueStates);
+        const uniqueCities = [...new Set(fetchedData.map(item => item.city))];
+        setCities(uniqueCities);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedState) {
+      const filteredCities = [...new Set(data.filter(item => item.state === selectedState).map(item => item.city))];
+      setCities(filteredCities);
+    } else {
+      const allCities = [...new Set(data.map(item => item.city))];
+      setCities(allCities);
+    }
+  }, [selectedState, data]);
+
+  const handleStateChange = (e) => {
+    setSelectedState(e.target.value);
+    setSelectedCity(''); // Reset city filter when state changes
+  };
+
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
+  };
+
+  const handleClearFilters = () => {
+    setSelectedState('');
+    setSelectedCity('');
+    const allCities = [...new Set(data.map(item => item.city))];
+    setCities(allCities);
+  };
+
   const toggleFilter = () => {
     setIsFilterVisible(!isFilterVisible);
   };
-  const delhiCinemas = [
-    "PVR Anupam Saket",
-    "PVR Select Citywalk",
-    "Cinepolis DLF Place",
-    "INOX Nehru Place",
-    "Carnival Cinemas",
-    "DT Cinemas DLF Promenade",
-    "M Cinemas",
-    "Liberty Cinema",
-    "Delite Cinema",
-    "Regal Cinema",
-    // Add more cinemas as needed
-  ];
-  const indianCities = [
-    "Mumbai",
-    "Delhi",
-    "Bengaluru",
-    "Hyderabad",
-    "Ahmedabad",
-    "Chennai",
-    "Kolkata",
-    "Surat",
-    "Pune",
-    "Jaipur",
-    "Lucknow",
-    "Kanpur",
-    "Nagpur",
-    "Indore",
-    "Thane",
-    "Bhopal",
-    "Visakhapatnam",
-    "Pimpri-Chinchwad",
-    "Patna",
-    "Vadodara",
-    // Add more cities as needed
-  ];
-  const states = [
-   "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttar Pradesh",
-    "Uttarakhand",
-    "West Bengal"
-  ];
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
-  const cinema = [
-    {
-      image: radio1,
-      title: "Cinepolis Fun Republic Mall, Screen - 3, Andheri West",
-      spend: "₹ 7,00,000Min Spend",
-        location:'rohini',
-    },
-    {
-      image: radio2,
-      title: "PVR INOX Vishnu Shivam Mall, Screen - 1, Kandivali",
-      spend: "₹ 2800 Min Spend",
-    },
-    {
-      image: radio3,
-      title: "PVR INOX Phoenix Mall(Mumbai), Screen - 5,",
-      spend: "₹ 7,00,000Min Spend",
-        location:'rohini',
-    },
-    {
-      image: radio4,
-      title: "Cinepolis Fun Republic Mall, Screen - 3, Andheri West",
-      spend: "₹ 7,00,000Min Spend",
-        location:'rohini',
-    },
-    {
-      image: radio5,
-      title: "Carnival Cinemas Sangam Theatre, Screen - 2, Andheri",
-      spend: "₹ 7,00,000Min Spend",
-        location:'rohini',
-    },
-    {
-      image: radio6,
-      title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
-      spend: "₹ 7,00,000Min Spend",
-        location:'rohini',
-    },
-  ];
-  const truncateTitle = (title) => {
-    const words = title.split(' ');
-    if (words.length > 4) {
-      return `${words.slice(0, 5).join(' ')}...`;
+
+  const addToCart = (item) => {
+    const updatedCartItems = [...cartItems];
+    const existingRadioItem = updatedCartItems.find(cartItem => cartItem.type === 'radio');
+    const existingCinemaItem = updatedCartItems.find(cartItem => cartItem.type === 'cinema');
+    const existingOutdoorItem = updatedCartItems.find(cartItem => cartItem.type === 'outdoor');
+  
+    if (item.type === 'cinema' && (existingOutdoorItem || existingRadioItem)) {
+      toast.error('You cannot add Cinema products while Outdoor Hording or Radio products are in the cart.');
+      return;
     }
-    return title;
+  
+    if (item.type === 'outdoor' && (existingCinemaItem || existingRadioItem)) {
+      toast.error('You cannot add Outdoor Hording products while Cinema or Radio products are in the cart.');
+      return;
+    }
+  
+    if (item.type === 'radio' && (existingCinemaItem || existingOutdoorItem)) {
+      toast.error('You cannot add Radio products while Cinema or Outdoor Hording products are in the cart.');
+      return;
+    }
+  
+    // if (item.type === "radio" && existingRadioItem) {
+    //   toast.error("Radio item already in cart.");
+    //   return;
+    // }
+  
+    updatedCartItems.push({ ...item, quantity: 1 });
+    toast.success('Item added to cart.');
+    setCartItems(updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+  
+    const newCartCount = updatedCartItems.reduce((acc, cur) => acc + cur.quantity, 0);
+    setCartCount(newCartCount);
+    localStorage.setItem('cartCount', newCartCount);
   };
+  
+
+  const isItemInCart = (itemId) => {
+    return cartItems.some(cartItem => cartItem._id === itemId);
+  };
+
+  const filteredData = data.filter(item => {
+    const isStateMatch = !selectedState || item.state === selectedState;
+    const isCityMatch = !selectedCity || item.city === selectedCity;
+    return isStateMatch && isCityMatch;
+  });
+
+  const truncateTitle = (title) => {
+    if (typeof title !== 'string') return '';
+    const words = title.split(' ');
+    return words.length > 4 ? `${words.slice(0, 5).join(' ')}...` : title;
+  };
+
   return (
     <>
       <div style={{ borderBottom: "3px solid black" }}>
@@ -152,11 +149,8 @@ function RadioAdvertisement() {
                   className="addbutton"
                   style={{ display: "flex", justifyContent: "end" }}
                 >
-                  <button class="cssbuttons-io">
-                    <span>
-                      {" "}
-                      Filter &nbsp; <i class="bi bi-cart4"></i>{" "}
-                    </span>{" "}
+                  <button className="cssbuttons-io">
+                    <span>Filter &nbsp; <i className="bi bi-cart4"></i></span>
                   </button>
                 </p>
               </div>
@@ -166,34 +160,19 @@ function RadioAdvertisement() {
                   <div className="filteration mb-3">
                     <div>
                       <label
-                        htmlFor="cinemaChainSelect"
-                        style={{ fontSize: "14px", color: "black" }}
-                        className="form-label"
-                      >
-                        Cinema Chain
-                      </label>
-                      <select
-                        className="form-select"
-                        aria-label="Cinema Chain select"
-                      >
-                        <option selected>Select Cinema Chain</option>
-                        {states.map((state, index) => (
-                          <option key={index} value={state}>
-                            {state}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label
                         htmlFor="stateSelect"
                         style={{ fontSize: "14px", color: "black" }}
                         className="form-label"
                       >
                         Select State
                       </label>
-                      <select className="form-select" aria-label="State select">
-                        <option selected>Select State</option>
+                      <select
+                        id="stateSelect"
+                        className="form-select"
+                        value={selectedState}
+                        onChange={handleStateChange}
+                      >
+                        <option value="">Select State</option>
                         {states.map((state, index) => (
                           <option key={index} value={state}>
                             {state}
@@ -201,51 +180,73 @@ function RadioAdvertisement() {
                         ))}
                       </select>
                     </div>
-                    <div>
-                      <label
-                        htmlFor="citySelect"
-                        style={{ fontSize: "14px", color: "black" }}
-                        className="form-label"
+                    {selectedState && (
+                      <div>
+                        <label
+                          htmlFor="citySelect"
+                          style={{ fontSize: "14px", color: "black" }}
+                          className="form-label"
+                        >
+                          Select City
+                        </label>
+                        <select
+                          id="citySelect"
+                          className="form-select"
+                          value={selectedCity}
+                          onChange={handleCityChange}
+                        >
+                          <option value="">Select City</option>
+                          {cities.map((city, index) => (
+                            <option key={index} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    <div className="mt-3">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={handleClearFilters}
                       >
-                        Select City
-                      </label>
-                      <select id="citySelect" className="form-select">
-                        <option value="">Select a city</option>
-                        {indianCities.map((city, index) => (
-                          <option key={index} value={city}>
-                            {city}
-                          </option>
-                        ))}
-                      </select>
+                        Clear Filters
+                      </button>
                     </div>
                   </div>
                 </div>
               )}
             </div>
             <hr />
-            {cinema.map((item) => (
-              <div className="col-md-3 mb-4">
+            {filteredData.map((item) => (
+              <div className="col-md-3 mb-4" key={item._id}>
                 <div className="cinema-card">
-                  <img src={item.image} alt="Cinema-image" />
+                  <img src={item.image} alt="Radio-image" />
                   <div>
-                  <h4>{truncateTitle(item.title)}</h4>
+                    <h4>{truncateTitle(item.station)}</h4>
                     <hr />
                     <p className="person">
-                    <img src={location} alt="rating" />&nbsp; &nbsp; Location: {item.location}
+                      <img src={location} alt="location" />&nbsp; &nbsp; State: {item.state}
                     </p>
                     <p className="person">
-                    <img src={spendcinema} alt="rating" />&nbsp; &nbsp; {item.spend}
+                      <img src={location} alt="location" />&nbsp; &nbsp; City: {item.city}
                     </p>
-                    {/* <p className="addbutton">
-                      <button class="cssbuttons-io">
-                        <Link to={"/cart"}>
+                    <p className="person">
+                      <img src={spendcinema} alt="spending" />&nbsp; &nbsp; ₹ {item.rate}
+                    </p>
+                    <p className="addbutton">
+                      {isItemInCart(item._id) ? (
+                        <button className="cssbuttons-io" disabled>
+                          <span>Already In Cart</span>
+                        </button>
+                      ) : (
+                        <button className="cssbuttons-io" onClick={() => addToCart({ ...item, type: 'radio' })}>
                           <span>
                             Add To Cart &nbsp;
-                            <i class="bi bi-cart4"></i>
+                            <i className="bi bi-cart4"></i>
                           </span>
-                        </Link>
-                      </button>
-                    </p> */}
+                        </button>
+                      )}
+                    </p>
                   </div>
                 </div>
               </div>

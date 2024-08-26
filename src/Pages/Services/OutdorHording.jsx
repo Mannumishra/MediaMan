@@ -20,7 +20,7 @@ function OutdoorHording() {
 
   const getApiData = async () => {
     try {
-      const res = await axios.get("https://mediamanserver.onrender.com/api/hoading");
+      const res = await axios.get("http://localhost:8000/api/hoading");
       if (res.status === 200) {
         setData(res.data.data.reverse());
         setFilteredData(res.data.data.reverse());
@@ -71,15 +71,24 @@ function OutdoorHording() {
   const addToCart = (item) => {
     const updatedCartItems = [...cartItems];
     const existingCinemaItem = updatedCartItems.find(cartItem => cartItem.type === 'cinema');
+    const existingRadioItem = updatedCartItems.find(cartItem => cartItem.type === 'radio');
     const existingOutdoorItem = updatedCartItems.find(cartItem => cartItem.type === 'outdoor');
 
+    // Prevent adding an outdoor product if a cinema or radio product is already in the cart
+    if (item.type === 'outdoor' && (existingCinemaItem || existingRadioItem)) {
+      toast.error('You cannot add Outdoor Hording products while Cinema or Radio products are in the cart.');
+      return;
+    }
+
+    // Prevent adding a cinema product if an outdoor product is already in the cart
     if (item.type === 'cinema' && existingOutdoorItem) {
       toast.error('You cannot add Cinema products while Outdoor Hording products are in the cart.');
       return;
     }
 
-    if (item.type === 'outdoor' && existingCinemaItem) {
-      toast.error('You cannot add Outdoor Hording products while Cinema products are in the cart.');
+    // Prevent adding a radio product if an outdoor product is already in the cart
+    if (item.type === 'radio' && existingOutdoorItem) {
+      toast.error('You cannot add Radio products while Outdoor Hording products are in the cart.');
       return;
     }
 
@@ -87,7 +96,7 @@ function OutdoorHording() {
 
     if (existingItemIndex !== -1) {
       updatedCartItems[existingItemIndex].quantity += 1;
-      toast.error("Item already in cart. Quantity increased.")
+      toast.error("Item already in cart. Quantity increased.");
     } else {
       updatedCartItems.push({ ...item, quantity: 1 });
       toast.success('Item added to cart.');
