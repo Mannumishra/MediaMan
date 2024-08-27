@@ -22,8 +22,8 @@ function Cart() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-   // Determine the type based on cart items
-   const getCartType = () => {
+  // Determine the type based on cart items
+  const getCartType = () => {
     const types = cartItems.map(item => item.type);
     return types.length > 0 ? types[0] : "";
   };
@@ -47,13 +47,27 @@ function Cart() {
   const calculateTotal = () => {
     return cartItems
       .reduce((total, item) => {
-        const money = item.money ? item.money.toString() : "0";
-        const price = parseFloat(money.replace(/[^\d.-]/g, "")) || 0;
+        let price = 0;
+  
+        if (item.type === "cinema") {
+          price = parseFloat((item.baseRate10SecWeek || "0").toString().replace(/[^\d.-]/g, "")) || 0;
+        } else if (item.type === "outdoor") {
+          price = parseFloat((item.total || "0").toString().replace(/[^\d.-]/g, "")) || 0;
+        } else if (item.type === "radio") {
+          price = parseFloat((item.rate || "0").toString().replace(/[^\d.-]/g, "")) || 0;
+        }
+  
         const quantity = item.quantity || 1;
-        return total + price * quantity;
+        const itemTotal = price * quantity;
+        const itemTotalWithGST = itemTotal + itemTotal * 0.18;
+  
+        return total + itemTotalWithGST;
       }, 0)
       .toFixed(2);
   };
+  
+
+
 
   const handleSubmit = async () => {
     if (!name || !email || !phone) {
@@ -265,16 +279,17 @@ function Cart() {
                 <tfoot>
                   <tr>
                     <td>
-                    <Link to={cartType === "cinema" ? "/cinema" : "/outdoor-hoardings"} className="btn btn-warning">
+                      <Link to={cartType === "cinema" ? "/cinema" : "/outdoor-hoardings"} className="btn btn-warning">
                         <i className="fa fa-angle-left"></i> Continue Shopping
                       </Link>
                     </td>
-                    <td colSpan="2" className="hidden-xs"></td>
+                    <td colSpan="5" className="hidden-xs"></td>
                     <td></td>
                     <td></td>
-                    {/* <td className="hidden-xs text-center">
-                      <strong>Total {calculateTotal()} Rs.</strong>
-                    </td> */}
+                    <td className="hidden-xs text-center">
+                      <strong>Total {calculateTotal()} Rs.(Including 18% GST)</strong>
+                    </td>
+
                     <td>
                       <button
                         type="button"
