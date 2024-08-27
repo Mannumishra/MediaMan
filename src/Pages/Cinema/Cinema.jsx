@@ -168,8 +168,8 @@ function Cinema() {
 
           {isFilterVisible && (
             <div className="col-md-12">
-              <div className="filteration mb-3">
-                <div>
+              <div className=" mb-3 row justify-center">
+                <div className="col-md col-4">
                   <select
                     className="form-select"
                     aria-label="Cinema Chain select"
@@ -184,7 +184,7 @@ function Cinema() {
                     ))}
                   </select>
                 </div>
-                <div>
+                <div className="col-md col-4">
                   <select
                     className="form-select"
                     aria-label="State select"
@@ -199,7 +199,7 @@ function Cinema() {
                     ))}
                   </select>
                 </div>
-                <div>
+                <div className="col-md col-4">
                   <select
                     id="citySelect"
                     className="form-select"
@@ -215,7 +215,7 @@ function Cinema() {
                   </select>
                 </div>
                 {/* Clear Filters Button */}
-                <div className="mt-3">
+                <div className=" col-md col-12 mt-2 mt-md-0 text-center">
                   <button className="cssbuttons-io" onClick={clearFilters}>
                     <span>Clear Filters</span>
                   </button>

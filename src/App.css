@@ -118,6 +118,11 @@ a {
   height: 400px;
 }
 
+@media (min-width: 768px){
+  .modal-dialog {
+    max-width: 30% !important;
+  }
+}
 @media (max-width: 768px) {
   .heading {
     font-size: 26px;
@@ -149,5 +154,11 @@ a {
 
   .services {
     margin-top: 0;
+  }
+  .modal.fade.show{
+    padding: 2rem 1rem !important;
+  }
+  .modal-dialog {
+    max-width: 100% !important;
   }
 }
