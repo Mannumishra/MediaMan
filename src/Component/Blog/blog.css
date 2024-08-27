@@ -61,7 +61,7 @@
 
 .blog-content a {
     align-self: flex-start;
-    background-color: #007bff;
+    /* background-color: #007bff; */
     color: #fff;
     text-decoration: none;
     padding: 10px 20px;
@@ -70,7 +70,7 @@
 }
 
 .blog-content a:hover {
-    background-color: #0056b3;
+    /* background-color: #0056b3; */
 }
 @media (max-width: 768px) {
     .blog-row {

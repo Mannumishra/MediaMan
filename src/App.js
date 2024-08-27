@@ -23,6 +23,7 @@ import Login from "./Component/Login/Login";
 import Signup from "./Component/SignUp/Signup";
 import toast, { Toaster } from 'react-hot-toast';
 import PopupBox from "./Component/PopUpBox/PopupBox";
+import SingleBlogPage from "./Component/Blog/SingleBlogPage";
 const App = () => {
   return (
     <>
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/cinema" element={<Cinema />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/singleblog/:_id" element={<SingleBlogPage />} />
           <Route path="/bus-branding" element={<BusBranding />} />
           <Route path="/outdoor-hoardings" element={<OutdorHording />} />
           <Route path="/airport-branding-advertisement" element={<AirportBranding />} />
