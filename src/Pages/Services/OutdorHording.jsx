@@ -23,7 +23,7 @@ function OutdoorHording() {
 
   const getApiData = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/hoading");
+      const res = await axios.get("https://mediamanserver.onrender.com/api/hoading");
       if (res.status === 200) {
         setData(res.data.data.reverse());
         setFilteredData(res.data.data.reverse());

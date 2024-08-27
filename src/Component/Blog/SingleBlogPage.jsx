@@ -10,7 +10,7 @@ const SingleBlogPage = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/blog/${_id}`);
+        const res = await axios.get(`https://mediamanserver.onrender.com/api/blog/${_id}`);
         if (res.status === 200) {
           setBlog(res.data.data);
         }
