@@ -8,6 +8,7 @@ import "../Cinema/cinema.css";
 import toast from "react-hot-toast";
 import location from '../../Image/location.png';
 import pvr from '../../Image/PVR CINEMA.jpg'
+import Loader from "../../Component/Loader/Loader";
 
 function Cinema() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -22,6 +23,8 @@ function Cinema() {
   const [selectedCity, setSelectedCity] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 30;
+  const [loading, setLoading] = useState(true); // Add loading state
+
 
   // Fetch cinema data and initialize filter options
   const getCinemaData = async () => {
@@ -38,9 +41,13 @@ function Cinema() {
         setCinemaChains(uniqueChains);
         setStates(uniqueStates);
         setCities(uniqueCities);
+        setLoading(false); // Set loading to false once data is fetched
+
       }
     } catch (error) {
       console.error("Error fetching cinema data:", error);
+      setLoading(false); // Ensure loading is set to false even if there's an error
+
     }
   };
 
@@ -135,144 +142,148 @@ function Cinema() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-7" style={{ alignItems: "center" }}>
-          <div className="filter">
-            <h5 style={{ color: "red", textAlign: "start" }}>
-              <span style={{ color: "black" }}> For Cinema Advertising Do Add Cinema In Cart, By Location where You want to ADS.</span>
-            </h5>
-          </div>
-        </div>
-        <div className="col-md-5">
-          <div
-            onClick={() => setIsFilterVisible(!isFilterVisible)}
-            style={{ textAlign: "end", cursor: "pointer" }}
-          >
-            <p className="addbutton" style={{ display: "flex", justifyContent: "end" }}>
-              <button className="cssbuttons-io">
-                <span>Filter</span>
-              </button>
-            </p>
-          </div>
-        </div>
-
-        {isFilterVisible && (
-          <div className="col-md-12">
-            <div className="filteration mb-3">
-              <div>
-                <select
-                  className="form-select"
-                  aria-label="Cinema Chain select"
-                  value={selectedChain}
-                  onChange={(e) => setSelectedChain(e.target.value)}
-                >
-                  <option value="">Select Cinema Chain</option>
-                  {cinemaChains.map((chain, index) => (
-                    <option key={index} value={chain}>
-                      {chain}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <select
-                  className="form-select"
-                  aria-label="State select"
-                  value={selectedState}
-                  onChange={(e) => setSelectedState(e.target.value)}
-                >
-                  <option value="">Select State</option>
-                  {states.map((state, index) => (
-                    <option key={index} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <select
-                  id="citySelect"
-                  className="form-select"
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                >
-                  <option value="">Select a city</option>
-                  {cities.map((city, index) => (
-                    <option key={index} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* Clear Filters Button */}
-              <div className="mt-3">
-                <button className="cssbuttons-io" onClick={clearFilters}>
-                  <span>Clear Filters</span>
-                </button>
-              </div>
+    <>
+    {loading ? <Loader/> : (
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-md-7" style={{ alignItems: "center" }}>
+            <div className="filter">
+              <h5 style={{ color: "red", textAlign: "start" }}>
+                <span style={{ color: "black" }}> For Cinema Advertising Do Add Cinema In Cart, By Location where You want to ADS.</span>
+              </h5>
             </div>
           </div>
-        )}
+          <div className="col-md-5">
+            <div
+              onClick={() => setIsFilterVisible(!isFilterVisible)}
+              style={{ textAlign: "end", cursor: "pointer" }}
+            >
+              <p className="addbutton" style={{ display: "flex", justifyContent: "end" }}>
+                <button className="cssbuttons-io">
+                  <span>Filter</span>
+                </button>
+              </p>
+            </div>
+          </div>
 
-        <hr style={{ margin: '5px' }} />
-
-        {getPaginatedCinemas().map((item, index) => (
-          <div className="col-md-3 mb-4" key={index}>
-            <div className="cinema-card">
-              <img src={item.image} alt="Cinema" className="myiamge" />
-              <div className="">
-                <h4>{truncateTitle(item.cinema)} {item.name}</h4>
+          {isFilterVisible && (
+            <div className="col-md-12">
+              <div className="filteration mb-3">
                 <div>
-                  <hr style={{ margin: '5px' }} />
-                  <p className="person">
-                    <img src={rating} alt="rating" /> &nbsp; &nbsp;Category: {item.category}
-                  </p>
-                  <p className="person">
-                    <img src={location} alt="location" /> &nbsp; &nbsp;State: {item.state}
-                  </p>
-                  <p className="person">
-                    <img src={location} alt="location" /> &nbsp; &nbsp;City: {item.city}
-                  </p>
-                  <p className="person">
-                    <img src={cinemascreen} alt="cinemascreen" /> &nbsp; &nbsp;Screen: {item.audi}
-                  </p>
-                  <p className="person">
-                    <img src={seatcinema} alt="seatcinema" /> &nbsp; &nbsp;Seats Available: {item.seatingCapacity}
-                  </p>
-                  <p className="person">
-                    <img src={spendcinema} alt="spendcinema" /> &nbsp; &nbsp;Price: {item.baseRate10SecWeek}
-                  </p>
-                  <p className="addbutton">
-                    {
-                      isItemInCart(item._id) ? (
-                        <button className="cssbuttons-io" disabled>
-                          <span>Already In Cart</span>
-                        </button>
-                      ) :
-                        <button className="cssbuttons-io" onClick={() => addToCart(item)}>
-                          <span>
-                            Add To Cart &nbsp;
-                            <i className="bi bi-cart4"></i>
-                          </span>
-                        </button>
-                    }
-                  </p>
+                  <select
+                    className="form-select"
+                    aria-label="Cinema Chain select"
+                    value={selectedChain}
+                    onChange={(e) => setSelectedChain(e.target.value)}
+                  >
+                    <option value="">Select Cinema Chain</option>
+                    {cinemaChains.map((chain, index) => (
+                      <option key={index} value={chain}>
+                        {chain}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <select
+                    className="form-select"
+                    aria-label="State select"
+                    value={selectedState}
+                    onChange={(e) => setSelectedState(e.target.value)}
+                  >
+                    <option value="">Select State</option>
+                    {states.map((state, index) => (
+                      <option key={index} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <select
+                    id="citySelect"
+                    className="form-select"
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                  >
+                    <option value="">Select a city</option>
+                    {cities.map((city, index) => (
+                      <option key={index} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/* Clear Filters Button */}
+                <div className="mt-3">
+                  <button className="cssbuttons-io" onClick={clearFilters}>
+                    <span>Clear Filters</span>
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-
-        <div className="text-center mt-4">
-          {getPaginatedCinemas().length < filteredCinemas.length && (
-            <button className="cssbuttons-io mb-5" onClick={loadMore}>
-              <span>Load More</span>
-            </button>
           )}
+
+          <hr style={{ margin: '5px' }} />
+
+          {getPaginatedCinemas().map((item, index) => (
+            <div className="col-md-3 mb-4" key={index}>
+              <div className="cinema-card">
+                <img src={item.image} alt="Cinema" className="myiamge" />
+                <div className="">
+                  <h4>{truncateTitle(item.cinema)} {item.name}</h4>
+                  <div>
+                    <hr style={{ margin: '5px' }} />
+                    <p className="person">
+                      <img src={rating} alt="rating" /> &nbsp; &nbsp;Category: {item.category}
+                    </p>
+                    <p className="person">
+                      <img src={location} alt="location" /> &nbsp; &nbsp;State: {item.state}
+                    </p>
+                    <p className="person">
+                      <img src={location} alt="location" /> &nbsp; &nbsp;City: {item.city}
+                    </p>
+                    <p className="person">
+                      <img src={cinemascreen} alt="cinemascreen" /> &nbsp; &nbsp;Screen: {item.audi}
+                    </p>
+                    <p className="person">
+                      <img src={seatcinema} alt="seatcinema" /> &nbsp; &nbsp;Seats Available: {item.seatingCapacity}
+                    </p>
+                    <p className="person">
+                      <img src={spendcinema} alt="spendcinema" /> &nbsp; &nbsp;Price: {item.baseRate10SecWeek}
+                    </p>
+                    <p className="addbutton">
+                      {
+                        isItemInCart(item._id) ? (
+                          <button className="cssbuttons-io" disabled>
+                            <span>Already In Cart</span>
+                          </button>
+                        ) :
+                          <button className="cssbuttons-io" onClick={() => addToCart(item)}>
+                            <span>
+                              Add To Cart &nbsp;
+                              <i className="bi bi-cart4"></i>
+                            </span>
+                          </button>
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="text-center mt-4">
+            {getPaginatedCinemas().length < filteredCinemas.length && (
+              <button className="cssbuttons-io mb-5" onClick={loadMore}>
+                <span>Load More</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    )}
+    </>
   );
 }
 

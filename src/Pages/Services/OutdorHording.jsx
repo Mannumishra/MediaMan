@@ -5,6 +5,7 @@ import spendcinema from '../../Image/spending.png';
 import "../Cinema/cinema.css";
 import toast from "react-hot-toast";
 import location from '../../Image/location.png';
+import Loader from "../../Component/Loader/Loader";
 
 function OutdoorHording() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -13,6 +14,7 @@ function OutdoorHording() {
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [fullloading, setFullLoading] = useState(true); // Add loading state
 
   // State variables for filters
   const [selectedState, setSelectedState] = useState("");
@@ -26,10 +28,12 @@ function OutdoorHording() {
         setData(res.data.data.reverse());
         setFilteredData(res.data.data.reverse());
         setLoading(false);
+        setFullLoading(false);
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
+      setFullLoading(false);
     }
   };
 
@@ -132,151 +136,153 @@ function OutdoorHording() {
 
   return (
     <>
-      <div>
-        <div className="container mt-5">
-          <div className="row">
-            <div className="col-md-6" style={{ alignItems: "center" }}>
-              <div className="filter">
-                <h5 style={{ color: "red", textAlign: "start" }}>
-                <span style={{ color: "black" }}> For Outdoor Hoading Advertising Do Add Outdoor Hoading In Cart, By Loaction where You want to ADS.</span>
-                </h5>
+      {fullloading ? <Loader /> : (
+        <div>
+          <div className="container mt-5">
+            <div className="row">
+              <div className="col-md-6" style={{ alignItems: "center" }}>
+                <div className="filter">
+                  <h5 style={{ color: "red", textAlign: "start" }}>
+                    <span style={{ color: "black" }}> For Outdoor Hoading Advertising Do Add Outdoor Hoading In Cart, By Loaction where You want to ADS.</span>
+                  </h5>
+                </div>
               </div>
-            </div>
-            <div className="col-md-6">
-              <div
-                onClick={() => setIsFilterVisible(!isFilterVisible)}
-                style={{ textAlign: "end", cursor: "pointer" }}
-              >
-                <p className="addbutton" style={{ display: "flex", justifyContent: "end" }}>
-                  <button className="cssbuttons-io">
-                    <span>Filter</span>
-                  </button>
-                </p>
+              <div className="col-md-6">
+                <div
+                  onClick={() => setIsFilterVisible(!isFilterVisible)}
+                  style={{ textAlign: "end", cursor: "pointer" }}
+                >
+                  <p className="addbutton" style={{ display: "flex", justifyContent: "end" }}>
+                    <button className="cssbuttons-io">
+                      <span>Filter</span>
+                    </button>
+                  </p>
+                </div>
               </div>
-            </div>
-            {isFilterVisible && (
-              <div className="col-md-12">
-                <div className="filteration mb-3">
-                <div>
-                    {/* <label
+              {isFilterVisible && (
+                <div className="col-md-12">
+                  <div className="filteration mb-3">
+                    <div>
+                      {/* <label
                       htmlFor="mediaSelect"
                       style={{ fontSize: "14px", color: "black" }}
                       className="form-label"
                     >
                       Select Media
                     </label> */}
-                    <select
-                      id="mediaSelect"
-                      className="form-select"
-                      value={selectedMedia}
-                      onChange={(e) => setSelectedMedia(e.target.value)}
-                    >
-                      <option value="">Select Media</option>
-                      {[...new Set(data.map(item => item.media))].map((media, index) => (
-                        <option key={index} value={media}>
-                          {media}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    {/* <label
+                      <select
+                        id="mediaSelect"
+                        className="form-select"
+                        value={selectedMedia}
+                        onChange={(e) => setSelectedMedia(e.target.value)}
+                      >
+                        <option value="">Select Media</option>
+                        {[...new Set(data.map(item => item.media))].map((media, index) => (
+                          <option key={index} value={media}>
+                            {media}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      {/* <label
                       htmlFor="stateSelect"
                       style={{ fontSize: "14px", color: "black" }}
                       className="form-label"
                     >
                       Select State
                     </label> */}
-                    <select
-                      className="form-select"
-                      aria-label="State select"
-                      value={selectedState}
-                      onChange={(e) => setSelectedState(e.target.value)}
-                    >
-                      <option value="">Select State</option>
-                      {[...new Set(data.map(item => item.state))].map((state, index) => (
-                        <option key={index} value={state}>
-                          {state}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    {/* <label
+                      <select
+                        className="form-select"
+                        aria-label="State select"
+                        value={selectedState}
+                        onChange={(e) => setSelectedState(e.target.value)}
+                      >
+                        <option value="">Select State</option>
+                        {[...new Set(data.map(item => item.state))].map((state, index) => (
+                          <option key={index} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      {/* <label
                       htmlFor="citySelect"
                       style={{ fontSize: "14px", color: "black" }}
                       className="form-label"
                     >
                       Select City
                     </label> */}
-                    <select
-                      id="citySelect"
-                      className="form-select"
-                      value={selectedCity}
-                      onChange={(e) => setSelectedCity(e.target.value)}
-                    >
-                      <option value="">Select City</option>
-                      {[...new Set(data.map(item => item.city))].map((city, index) => (
-                        <option key={index} value={city}>
-                          {city}
-                        </option>
-                      ))}
-                    </select>
+                      <select
+                        id="citySelect"
+                        className="form-select"
+                        value={selectedCity}
+                        onChange={(e) => setSelectedCity(e.target.value)}
+                      >
+                        <option value="">Select City</option>
+                        {[...new Set(data.map(item => item.city))].map((city, index) => (
+                          <option key={index} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                   </div>
-                 
                 </div>
-              </div>
-            )}
-            <hr style={{ margin: '5px' }} />
-            {loading ? (
-              <div className="text-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
+              )}
+              <hr style={{ margin: '5px' }} />
+              {loading ? (
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              filteredData.map((item, index) => (
-                <div className="col-md-3 mb-4" key={index}>
-                  <div className="cinema-card">
-                    <img src={item.image} alt="Outdoor Hording" />
-                    <div>
-                      <h4>{truncateTitle(item.media)}</h4>
-                      <h6>{truncateTitle(item.location)}</h6>
-                      <hr style={{ margin: '5px' }} />
-                      <p className="person">
-                        <img src={location} alt="location" /> &nbsp; &nbsp;State : {item.state} 
-                      </p>
-                      <p className="person">
-                        <img src={location} alt="location" /> &nbsp; &nbsp;Location : {item.city} 
-                      </p>
-                      <p className="person">
-                        <img src={rating} alt="rating" /> &nbsp; &nbsp;Size : {item.height}H , {item.width}W 
-                      </p>
-                      <p className="person">
-                        <img src={spendcinema} alt="price" />&nbsp; &nbsp;Price : ₹{item.total}
-                      </p>
-                      <p className="addbutton">
-                        {isItemInCart(item._id) ? (
-                          <button className="cssbuttons-io" disabled>
-                            <span>Already In Cart</span>
-                          </button>
-                        ) : (
-                          <button className="cssbuttons-io" onClick={() => addToCart({ ...item, type: 'outdoor' })}>
-                            <span>
-                              Add To Cart &nbsp;
-                              <i className="bi bi-cart4"></i>
-                            </span>
-                          </button>
-                        )}
-                      </p>
+              ) : (
+                filteredData.map((item, index) => (
+                  <div className="col-md-3 mb-4" key={index}>
+                    <div className="cinema-card">
+                      <img src={item.image} alt="Outdoor Hording" />
+                      <div>
+                        <h4>{truncateTitle(item.media)}</h4>
+                        <h6>{truncateTitle(item.location)}</h6>
+                        <hr style={{ margin: '5px' }} />
+                        <p className="person">
+                          <img src={location} alt="location" /> &nbsp; &nbsp;State : {item.state}
+                        </p>
+                        <p className="person">
+                          <img src={location} alt="location" /> &nbsp; &nbsp;Location : {item.city}
+                        </p>
+                        <p className="person">
+                          <img src={rating} alt="rating" /> &nbsp; &nbsp;Size : {item.height}H , {item.width}W
+                        </p>
+                        <p className="person">
+                          <img src={spendcinema} alt="price" />&nbsp; &nbsp;Price : ₹{item.total}
+                        </p>
+                        <p className="addbutton">
+                          {isItemInCart(item._id) ? (
+                            <button className="cssbuttons-io" disabled>
+                              <span>Already In Cart</span>
+                            </button>
+                          ) : (
+                            <button className="cssbuttons-io" onClick={() => addToCart({ ...item, type: 'outdoor' })}>
+                              <span>
+                                Add To Cart &nbsp;
+                                <i className="bi bi-cart4"></i>
+                              </span>
+                            </button>
+                          )}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
