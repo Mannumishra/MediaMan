@@ -386,17 +386,17 @@ function Header() {
                 </ul>
               </li>
               <li>
-                <Link onClick={handleOtherMobActive} to={'/blog'} className="formarrow">
+                <Link onClick={handleMenuDeActive} to={'/blog'} className="formarrow">
                   {isOtherMobActive ? <>Blog</> : <>Blog</>}
                 </Link>
               </li>
               <li>
-                <Link onClick={handleOtherMobActive} to={'/contact'} className="formarrow">
+                <Link onClick={handleMenuDeActive} to={'/contact'} className="formarrow">
                   {isOtherMobActive ? <>Contact</> : <>Contact</>}
                 </Link>
               </li>
               <li>
-                <Link onClick={handleOtherMobActive} to={'/cart'} className="formarrow">
+                <Link onClick={handleMenuDeActive} to={'/cart'} className="formarrow">
                   {isOtherMobActive ? <>Cart</> : <>Cart</>}
                 </Link>
               </li>
