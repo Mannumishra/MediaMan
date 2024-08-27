@@ -31,7 +31,7 @@ const PopupBox = () => {
                     email: "",
                     phone: "",
                     message: "",
-                    lookingfor:""
+                    lookingfor: ""
                 });
                 setIsSubmitted(true); // Mark as submitted
             }
@@ -50,7 +50,7 @@ const PopupBox = () => {
                 // Open the modal
                 const modal = new window.bootstrap.Modal(document.getElementById('enquiryModal'));
                 modal.show();
-            }, 40000);
+            }, 90000);
         }
         return () => clearInterval(intervalId);
     }, [isSubmitted]);
