@@ -68,7 +68,7 @@ function BusBranding() {
               <div className="col-md-3 mb-4" key={index}>
                 <div className="cinema-card" onClick={() => openModal(item.image)}>
                   <img src={item.image} alt="Bus Branding" className="manage-image" style={{cursor:"pointer"}}/>
-                  <h6 className="mt-2">Min Spend ₹12,000</h6>
+                  <h6 className="mt-3 text-center">Min Spend ₹12,000</h6>
                 </div>
                 
               </div>
