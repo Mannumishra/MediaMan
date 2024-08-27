@@ -22,11 +22,13 @@ import Contact from "./Component/Contact/Contact";
 import Login from "./Component/Login/Login";
 import Signup from "./Component/SignUp/Signup";
 import toast, { Toaster } from 'react-hot-toast';
+import PopupBox from "./Component/PopUpBox/PopupBox";
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <Header />
+        <PopupBox />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

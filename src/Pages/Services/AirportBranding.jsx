@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import airport1 from "../../Image/airport1.jpg";
-import airport2 from "../../Image/airport2.jpg";
-import airport3 from "../../Image/airport3.jpg";
-import airport4 from "../../Image/airport4.jpg";
-import airport5 from "../../Image/airport5.webp";
-import airport6 from "../../Image/airport6.jpg";
+// import airport1 from "../../Image/airport1.jpg";
+// import airport2 from "../../Image/airport2.jpg";
+// import airport3 from "../../Image/airport3.jpg";
+// import airport4 from "../../Image/airport4.jpg";
+// import airport5 from "../../Image/airport5.webp";
+// import airport6 from "../../Image/airport6.jpg";
 function AirportBranding() {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -98,48 +98,48 @@ function AirportBranding() {
       behavior: "smooth",
     });
   }, []);
-  const cinema = [
-    {
-      image: airport1,
-      title: "Cinepolis Fun Republic Mall, Screen - 3, Andheri West",
-      spend: "₹ 7,00,000Min Spend",
-    },
-    {
-      image: airport2,
-      title: "PVR INOX Vishnu Shivam Mall, Screen - 1, Kandivali",
-      spend: "₹ 2800 Min Spend",
-    },
-    {
-      image: airport3,
-      title: "PVR INOX Phoenix Mall(Mumbai), Screen - 5,",
-      spend: "₹ 7,00,000Min Spend",
-    },
-    {
-      image: airport4,
-      title: "Cinepolis Fun Republic Mall, Screen - 3, Andheri West",
-      spend: "₹ 7,00,000Min Spend",
-    },
-    {
-      image: airport5,
-      title: "Carnival Cinemas Sangam Theatre, Screen - 2, Andheri",
-      spend: "₹ 7,00,000Min Spend",
-    },
-    {
-      image: airport6,
-      title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
-      spend: "₹ 7,00,000Min Spend",
-    },
-    {
-      image: airport6,
-      title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
-      spend: "₹ 7,00,000Min Spend",
-    },
-    {
-      image: airport6,
-      title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
-      spend: "₹ 7,00,000Min Spend",
-    },
-  ];
+  // const cinema = [
+  //   {
+  //     image: airport1,
+  //     title: "Cinepolis Fun Republic Mall, Screen - 3, Andheri West",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  //   {
+  //     image: airport2,
+  //     title: "PVR INOX Vishnu Shivam Mall, Screen - 1, Kandivali",
+  //     spend: "₹ 2800 Min Spend",
+  //   },
+  //   {
+  //     image: airport3,
+  //     title: "PVR INOX Phoenix Mall(Mumbai), Screen - 5,",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  //   {
+  //     image: airport4,
+  //     title: "Cinepolis Fun Republic Mall, Screen - 3, Andheri West",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  //   {
+  //     image: airport5,
+  //     title: "Carnival Cinemas Sangam Theatre, Screen - 2, Andheri",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  //   {
+  //     image: airport6,
+  //     title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  //   {
+  //     image: airport6,
+  //     title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  //   {
+  //     image: airport6,
+  //     title: "PVR INOX Oberoi Mall, Screen - 2, Goregaon",
+  //     spend: "₹ 7,00,000Min Spend",
+  //   },
+  // ];
   return (
     <>
     {console.log(airportimages)}
@@ -154,22 +154,11 @@ function AirportBranding() {
                 <hr />
               </div>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <div
                 onClick={toggleFilter}
                 style={{ textAlign: "end", cursor: "pointer" }}
               >
-                <p
-                  className="addbutton"
-                  style={{ display: "flex", justifyContent: "end" }}
-                >
-                  <button class="cssbuttons-io">
-                    <span>
-                      {" "}
-                      Filter &nbsp; <i class="bi bi-cart4"></i>{" "}
-                    </span>{" "}
-                  </button>
-                </p>
               </div>
 
               {isFilterVisible && (
@@ -229,9 +218,9 @@ function AirportBranding() {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
             <hr />
-            {cinema.map((item) => (
+            {/* {cinema.map((item) => (
               <div className="col-md-3 mb-4">
                 <div className="cinema-card">
                   <img src={item.image} alt="Cinema-image" />
@@ -244,7 +233,7 @@ function AirportBranding() {
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
@@ -284,7 +273,7 @@ function AirportBranding() {
                   onClick={closeModal}
                 ></button>
               </div>
-              <div className="modal-body">
+              <div className="modal-body w-100">
                 <img
                   src={selectedImage}
                   alt="Full screen"

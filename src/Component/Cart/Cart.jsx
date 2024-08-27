@@ -22,6 +22,14 @@ function Cart() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+   // Determine the type based on cart items
+   const getCartType = () => {
+    const types = cartItems.map(item => item.type);
+    return types.length > 0 ? types[0] : "";
+  };
+
+  const cartType = getCartType();
+
   useEffect(() => {
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCartItems(storedItems);
@@ -257,7 +265,7 @@ function Cart() {
                 <tfoot>
                   <tr>
                     <td>
-                      <Link to="/cinema" className="btn btn-warning">
+                    <Link to={cartType === "cinema" ? "/cinema" : "/outdoor-hoardings"} className="btn btn-warning">
                         <i className="fa fa-angle-left"></i> Continue Shopping
                       </Link>
                     </td>

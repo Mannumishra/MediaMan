@@ -1,12 +1,14 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: poppins;
 }
+
 body {
-background-color: white;
+  background-color: white;
 }
 
 ul {
@@ -18,6 +20,7 @@ ul {
 a {
   text-decoration: none !important;
 }
+
 .para {
   font-size: 1em;
   font-weight: 300;
@@ -33,6 +36,7 @@ a {
   text-align: center;
   color: white;
 }
+
 .our-services {
   padding: 2rem;
   height: 100%;
@@ -76,6 +80,7 @@ a {
   color: white;
   font-size: 16px;
 }
+
 .our-services .icon {
   text-align: center;
   font-size: 40px;
@@ -84,38 +89,65 @@ a {
 }
 
 .our-services:hover {
-  background: linear-gradient(
-    98.3deg,
-    rgb(0, 0, 0) 10.6%,
-    rgb(236 31 39) 97.7%
-    ) !important;
+  background: linear-gradient(98.3deg,
+      rgb(0, 0, 0) 10.6%,
+      rgb(236 31 39) 97.7%) !important;
   transition: 1s !important;
 }
+
+.manage-image {
+  aspect-ratio: 1;
+}
+
+.modal-dialog {
+  max-width: 50% !important;
+}
+
+.myselfcssmodal {
+  display: "flex";
+  background-color: "rgba(0, 0, 0, 0.8)";
+  justify-content: center;
+
+}
+.mycsssmodal{
+  height: 500px;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: 400px;
+}
+
 @media (max-width: 768px) {
   .heading {
     font-size: 26px;
     color: white;
   }
+
   .our-services .para {
     color: white;
     font-size: 12px;
     line-height: 22px;
     margin-top: 1rem;
   }
-  .our-services{
+
+  .our-services {
     padding: 1rem;
   }
+
   .serverHeading span::after {
     height: 20%;
     top: 42%;
     right: 108%;
-}
-.serverHeading span::before{
-  height: 20%;
+  }
+
+  .serverHeading span::before {
+    height: 20%;
     top: 42%;
     left: 108%;
-}
-.services{
-  margin-top: 0;
-}
+  }
+
+  .services {
+    margin-top: 0;
+  }
 }

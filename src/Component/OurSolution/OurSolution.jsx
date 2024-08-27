@@ -62,7 +62,7 @@ function OurSolution() {
                         <button class="cssbuttons-io">
                           <span>
                             Click To More &nbsp;
-                            <i class="bi bi-cart4"></i>
+                            {/* <i class="bi bi-cart4"></i> */}
                           </span>
                         </button>
                   </Link>

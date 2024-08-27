@@ -6,6 +6,8 @@ import seatcinema from '../../Image/seat.png';
 import spendcinema from '../../Image/spending.png';
 import "../Cinema/cinema.css";
 import toast from "react-hot-toast";
+import location from '../../Image/location.png';
+import pvr from '../../Image/PVR CINEMA.jpg'
 
 function Cinema() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -19,7 +21,7 @@ function Cinema() {
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
+  const itemsPerPage = 30;
 
   // Fetch cinema data and initialize filter options
   const getCinemaData = async () => {
@@ -87,7 +89,7 @@ function Cinema() {
   const getPaginatedCinemas = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return filteredCinemas.slice(startIndex, endIndex);
+    return filteredCinemas.slice(0, endIndex);
   };
 
   // Load more items
@@ -118,10 +120,6 @@ function Cinema() {
     const newCartCount = cartItems.reduce((acc, cur) => acc + cur.quantity, 0);
     setCartCount(newCartCount);
     localStorage.setItem('cartCount', newCartCount);
-
-    // setTimeout(() => {
-    //   window.location.reload()
-    // }, 1000);
   };
 
   const isItemInCart = (itemId) => {
@@ -139,14 +137,14 @@ function Cinema() {
   return (
     <div className="container mt-5">
       <div className="row">
-        <div className="col-md-6" style={{ alignItems: "center" }}>
+        <div className="col-md-7" style={{ alignItems: "center" }}>
           <div className="filter">
-            <h3 style={{ color: "red", textAlign: "start" }}>
-              Cinema <span style={{ color: "black" }}> Advertising</span>
-            </h3>
+            <h5 style={{ color: "red", textAlign: "start" }}>
+              <span style={{ color: "black" }}> For Cinema Advertising Do Add Cinema In Cart, By Location where You want to ADS.</span>
+            </h5>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-5">
           <div
             onClick={() => setIsFilterVisible(!isFilterVisible)}
             style={{ textAlign: "end", cursor: "pointer" }}
@@ -163,9 +161,6 @@ function Cinema() {
           <div className="col-md-12">
             <div className="filteration mb-3">
               <div>
-                <label htmlFor="cinemaChainSelect" style={{ fontSize: "14px", color: "black" }} className="form-label">
-                  Cinema Chain
-                </label>
                 <select
                   className="form-select"
                   aria-label="Cinema Chain select"
@@ -181,9 +176,6 @@ function Cinema() {
                 </select>
               </div>
               <div>
-                <label htmlFor="stateSelect" style={{ fontSize: "14px", color: "black" }} className="form-label">
-                  Select State
-                </label>
                 <select
                   className="form-select"
                   aria-label="State select"
@@ -199,9 +191,6 @@ function Cinema() {
                 </select>
               </div>
               <div>
-                <label htmlFor="citySelect" style={{ fontSize: "14px", color: "black" }} className="form-label">
-                  Select City
-                </label>
                 <select
                   id="citySelect"
                   className="form-select"
@@ -232,45 +221,44 @@ function Cinema() {
           <div className="col-md-3 mb-4" key={index}>
             <div className="cinema-card">
               <img src={item.image} alt="Cinema" className="myiamge" />
-              <div>
+              <div className="">
                 <h4>{truncateTitle(item.cinema)} {item.name}</h4>
-                {/* <h5>{item.state}/{item.city}</h5> */}
-                <hr style={{ margin: '5px' }} />
-                <p className="person">
-                  <img src={rating} alt="rating" /> &nbsp; &nbsp;Category: {item.category}
-                </p>
-                <p className="person">
-                  <img src={rating} alt="rating" /> &nbsp; &nbsp;State: {item.state}
-                </p>
-                <p className="person">
-                  <img src={rating} alt="rating" /> &nbsp; &nbsp;City: {item.city}
-                </p>
-                <p className="person">
-                  <img src={cinemascreen} alt="cinemascreen" /> &nbsp; &nbsp;Screen: {item.audi}
-                </p>
-                <p className="person">
-                  <img src={seatcinema} alt="seatcinema" /> &nbsp; &nbsp;Seats Available: {item.seatingCapacity}
-                </p>
-                <p className="person">
-                  <img src={spendcinema} alt="spendcinema" /> &nbsp; &nbsp;Price: {item.baseRate10SecWeek}
-                </p>
-                <p className="addbutton">
-                  {
-                    isItemInCart(item._id) ? (
-                      <button className="cssbuttons-io" disabled>
-                        <span>Already In Cart</span>
-                      </button>
-                    ) :
-                      <button className="cssbuttons-io" onClick={() => addToCart(item)}>
-                        <span>
-                          Add To Cart &nbsp;
-                          <i className="bi bi-cart4"></i>
-                        </span>
-                      </button>
-                  }
-
-                </p>
-
+                <div>
+                  <hr style={{ margin: '5px' }} />
+                  <p className="person">
+                    <img src={rating} alt="rating" /> &nbsp; &nbsp;Category: {item.category}
+                  </p>
+                  <p className="person">
+                    <img src={location} alt="location" /> &nbsp; &nbsp;State: {item.state}
+                  </p>
+                  <p className="person">
+                    <img src={location} alt="location" /> &nbsp; &nbsp;City: {item.city}
+                  </p>
+                  <p className="person">
+                    <img src={cinemascreen} alt="cinemascreen" /> &nbsp; &nbsp;Screen: {item.audi}
+                  </p>
+                  <p className="person">
+                    <img src={seatcinema} alt="seatcinema" /> &nbsp; &nbsp;Seats Available: {item.seatingCapacity}
+                  </p>
+                  <p className="person">
+                    <img src={spendcinema} alt="spendcinema" /> &nbsp; &nbsp;Price: {item.baseRate10SecWeek}
+                  </p>
+                  <p className="addbutton">
+                    {
+                      isItemInCart(item._id) ? (
+                        <button className="cssbuttons-io" disabled>
+                          <span>Already In Cart</span>
+                        </button>
+                      ) :
+                        <button className="cssbuttons-io" onClick={() => addToCart(item)}>
+                          <span>
+                            Add To Cart &nbsp;
+                            <i className="bi bi-cart4"></i>
+                          </span>
+                        </button>
+                    }
+                  </p>
+                </div>
               </div>
             </div>
           </div>

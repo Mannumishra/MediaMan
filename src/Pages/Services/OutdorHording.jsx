@@ -4,6 +4,7 @@ import rating from '../../Image/rating.png';
 import spendcinema from '../../Image/spending.png';
 import "../Cinema/cinema.css";
 import toast from "react-hot-toast";
+import location from '../../Image/location.png';
 
 function OutdoorHording() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -136,9 +137,9 @@ function OutdoorHording() {
           <div className="row">
             <div className="col-md-6" style={{ alignItems: "center" }}>
               <div className="filter">
-                {/* <h3 style={{ color: "red", textAlign: "start" }}>
-                  Outdoor <span style={{ color: "black" }}> Hoardings</span>
-                </h3> */}
+                <h5 style={{ color: "red", textAlign: "start" }}>
+                <span style={{ color: "black" }}> For Outdoor Hoading Advertising Do Add Outdoor Hoading In Cart, By Loaction where You want to ADS.</span>
+                </h5>
               </div>
             </div>
             <div className="col-md-6">
@@ -156,14 +157,36 @@ function OutdoorHording() {
             {isFilterVisible && (
               <div className="col-md-12">
                 <div className="filteration mb-3">
+                <div>
+                    {/* <label
+                      htmlFor="mediaSelect"
+                      style={{ fontSize: "14px", color: "black" }}
+                      className="form-label"
+                    >
+                      Select Media
+                    </label> */}
+                    <select
+                      id="mediaSelect"
+                      className="form-select"
+                      value={selectedMedia}
+                      onChange={(e) => setSelectedMedia(e.target.value)}
+                    >
+                      <option value="">Select Media</option>
+                      {[...new Set(data.map(item => item.media))].map((media, index) => (
+                        <option key={index} value={media}>
+                          {media}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div>
-                    <label
+                    {/* <label
                       htmlFor="stateSelect"
                       style={{ fontSize: "14px", color: "black" }}
                       className="form-label"
                     >
                       Select State
-                    </label>
+                    </label> */}
                     <select
                       className="form-select"
                       aria-label="State select"
@@ -179,13 +202,13 @@ function OutdoorHording() {
                     </select>
                   </div>
                   <div>
-                    <label
+                    {/* <label
                       htmlFor="citySelect"
                       style={{ fontSize: "14px", color: "black" }}
                       className="form-label"
                     >
                       Select City
-                    </label>
+                    </label> */}
                     <select
                       id="citySelect"
                       className="form-select"
@@ -200,28 +223,7 @@ function OutdoorHording() {
                       ))}
                     </select>
                   </div>
-                  <div>
-                    <label
-                      htmlFor="mediaSelect"
-                      style={{ fontSize: "14px", color: "black" }}
-                      className="form-label"
-                    >
-                      Select Media
-                    </label>
-                    <select
-                      id="mediaSelect"
-                      className="form-select"
-                      value={selectedMedia}
-                      onChange={(e) => setSelectedMedia(e.target.value)}
-                    >
-                      <option value="">Select Media</option>
-                      {[...new Set(data.map(item => item.media))].map((media, index) => (
-                        <option key={index} value={media}>
-                          {media}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                 
                 </div>
               </div>
             )}
@@ -242,7 +244,10 @@ function OutdoorHording() {
                       <h6>{truncateTitle(item.location)}</h6>
                       <hr style={{ margin: '5px' }} />
                       <p className="person">
-                        <img src={rating} alt="rating" /> &nbsp; &nbsp;Location : {item.city} 
+                        <img src={location} alt="location" /> &nbsp; &nbsp;State : {item.state} 
+                      </p>
+                      <p className="person">
+                        <img src={location} alt="location" /> &nbsp; &nbsp;Location : {item.city} 
                       </p>
                       <p className="person">
                         <img src={rating} alt="rating" /> &nbsp; &nbsp;Size : {item.height}H , {item.width}W 

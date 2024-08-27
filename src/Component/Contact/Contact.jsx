@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Contact/Contact.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 const Contact = () => {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+    lookingfor:""
+  })
+
+  const getInputdata = (e) => {
+    const { name, value } = e.target
+    setData({ ...data, [name]: value })
+  }
+
+  const postData = async (e) => {
+    try {
+      e.preventDefault()
+      const res = await axios.post("http://localhost:8000/api/contacts" ,data)
+      if (res.status === 200) {
+        toast.success("Your Query Send Suucessfully")
+        setData({
+          name:"",
+          phone:"",
+          email:"",
+          message:"",
+          lookingfor:""
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div>
       <div className="contact">
@@ -78,27 +111,33 @@ const Contact = () => {
             <div className="col-md-6">
               <div className="form">
                 <div class="contact-form">
-                  <form action="index.html" autocomplete="off">
+                  <form action="index.html" autocomplete="off" onSubmit={postData}>
                     <h3 class="title">Contact us</h3>
                     <div class="input-container">
-                      <input type="text" name="name" class="input" />
-                      <label for="">Username</label>
-                      <span>Username</span>
+                      <input type="text" name="name" value={data.name} onChange={getInputdata} class="input" placeholder="Enter Name" />
+                
                     </div>
                     <div class="input-container">
-                      <input type="email" name="email" class="input" />
-                      <label for="">Email</label>
-                      <span>Email</span>
+                      <input type="email" name="email" value={data.email} onChange={getInputdata} class="input" placeholder="Enter Email"/>
+    
                     </div>
                     <div class="input-container">
-                      <input type="tel" name="phone" class="input" />
-                      <label for="">Phone</label>
-                      <span>Phone</span>
+                      <input type="number" name="phone" value={data.phone}  onChange={getInputdata} class="input" placeholder="Enter Phone Number" />
+    
+                    </div>
+                    <div  class="input-container">
+                    <select name="lookingfor" id="" class="input" onChange={getInputdata} style={{background:"black"}}>
+                                <option value="Please Select" selected disabled>Please Select Looking for</option>
+                                <option value="Cinema Advertising">Cinema Advertising</option>
+                                <option value="Outdoor Hoading Advertising">Outdoor Hoading Advertising</option>
+                                <option value="Airport Advertising">Airport Advertising</option>
+                                <option value="Radio Advertisement">Radio Advertisement</option>
+                                <option value="Bus Advertising">Bus Advertising</option>
+                            </select>
                     </div>
                     <div class="input-container textarea">
-                      <textarea name="message" class="input"></textarea>
-                      <label for="">Message</label>
-                      <span>Message</span>
+                      <textarea name="message" class="input" value={data.message} onChange={getInputdata} placeholder="Message......"></textarea>
+            
                     </div>
                     <input type="submit" value="Send" class="btn" />
                   </form>
