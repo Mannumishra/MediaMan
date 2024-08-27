@@ -350,7 +350,7 @@ function Cart() {
                         required
                       />
                       <input
-                        type="tel"
+                        type="text"
                         className="form-control modalInput"
                         placeholder="Enter State Or city"
                         value={state}
