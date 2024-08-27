@@ -50,7 +50,7 @@ const PopupBox = () => {
                 // Open the modal
                 const modal = new window.bootstrap.Modal(document.getElementById('enquiryModal'));
                 modal.show();
-            }, 20000);
+            }, 40000);
         }
         return () => clearInterval(intervalId);
     }, [isSubmitted]);
