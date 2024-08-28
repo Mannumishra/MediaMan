@@ -65,30 +65,28 @@ function HomeSlider() {
       </div>
 
       <div className="workingcard">
-        <Link to={"/cinema"}>
+
+        <Link to={"/cinema"} class="card">
+          <div class="card-black card-content">
+            <div className="mb-0">
+              <img src={cinemaicon} width={"20%"} alt="" />
+            </div>
+            <h3>Cinema</h3>
+          </div>
+        </Link>
+        
+        <Link to={"/outdoor-hoardings"}>
           <div class="card">
             <div class="card-black card-content">
               <div className="mb-0">
-                <img src={cinemaicon} width={"20%"} alt="" />
+                <img src={advertise} width={"20%"} alt="" />
               </div>
-              <h3>Cinema</h3>
+              <h3>Hoardings</h3>
             </div>
           </div>
         </Link>
-        <Link to={"/hoarding"}>
-          <Link to={"/outdoor-hoardings"}>
-            <div class="card">
-              <div class="card-black card-content">
-                <div className="mb-0">
-                  <img src={advertise} width={"20%"} alt="" />
-                </div>
-                <h3>Hoardings</h3>
-              </div>
-            </div>
-          </Link>
-        </Link>
       </div>
-      
+
       <div className="container mt-4">
         <h4 className="text-center mt-3 mb-4">Popular State We Deal In.</h4>
         <div className="row">

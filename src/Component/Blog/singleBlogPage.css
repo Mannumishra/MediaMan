@@ -80,3 +80,8 @@
     }
   }
   
+ a.sin:hover {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}

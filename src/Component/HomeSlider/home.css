@@ -58,8 +58,8 @@
   border-radius: 30px;
 }
 .card {
-  margin-top: calc(50vh - 250px);
-  width: 260px;
+  /* margin-top: calc(50vh - 250px); */
+  /* width: 260px; */
   border: none;
   border-radius: 20px;
   color: #808080;
@@ -120,9 +120,9 @@
 .workingcard {
   display: flex;
   justify-content: space-between;
-  max-width: 40%;
+  max-width: 45%;
   margin: auto;
-  /* margin-top: -2rem; */
+  gap: 1rem;
 }
 .input-group .form-control {
   border-right: 0;
@@ -193,7 +193,11 @@ input:focus {
   }
 
   .workingcard {
-    display: ruby;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 80%;
   }
   .card {
     max-width: 100%;
