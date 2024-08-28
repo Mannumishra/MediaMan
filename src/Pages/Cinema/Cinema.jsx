@@ -232,7 +232,7 @@ function Cinema() {
           {getPaginatedCinemas().map((item, index) => (
             <div className="col-md-3 mb-4" key={index}>
               <div className="cinema-card">
-                <img src={item.cinemaChain==="PVR"?"https://res.cloudinary.com/dsimn9z1r/image/upload/v1724756102/tw2lzyowwiiflaje4eiy.jpg":item.image} alt="Cinema" className="myiamge" />
+                <img src={item.image} alt="Cinema" className="myiamge" />
                 <div className="">
                   <h4>{truncateTitle(item.cinema)} {item.name}</h4>
                   <div>
