@@ -52,14 +52,14 @@ const BlogList = () => {
               <div className="blog-content">
                 <h2>Blog Post {index + 1}</h2>
                 <p>{item.blogName}</p>
+                <Link to={`/singleblog/${item._id}`}>
                 <button className="cssbuttons-io">
-                  <Link to={`/singleblog/${item._id}`}>
                     <span>
                       Read More &nbsp;
                       <i className="bi bi-arrow-right-circle"></i>
                     </span>
-                  </Link>
                 </button>
+                </Link>
               </div>
             </div>
           </div>
