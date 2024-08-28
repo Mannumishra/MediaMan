@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import mission from "../../Image/mission.jpg";
 function Mission() {
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  },[])
   return (
     <>
       <div>

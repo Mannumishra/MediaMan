@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import vision from "../../Image/vision.avif";
 function Vision() {
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  },[])
   return (
     <>
       <div>

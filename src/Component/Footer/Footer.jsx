@@ -45,7 +45,7 @@ const Footer = () => {
                 <h2 class="footer-menu-name"> Services</h2>
                 <ul id="menu-legal" class="footer-menu-list">
                   <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-170434">
-                    <Link to={"/blog"}><i class="bi bi-chevron-double-right"></i> Cinema Advertising</Link>
+                    <Link to={"/cinema"}><i class="bi bi-chevron-double-right"></i> Cinema Advertising</Link>
                   </li>
                   <li class="menu-item menu-item-type-post_type menu-item-object-page">
                     <Link to={"/outdoor-hoardings"}><i class="bi bi-chevron-double-right"></i> Outdoor - Hoarding</Link>

@@ -20,6 +20,13 @@ const BlogList = () => {
   useEffect(() => {
     getApiData();
   }, []);
+  
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  },[])
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };

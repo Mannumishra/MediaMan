@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import image from "../../Image/cinemabanner.jpg";
 import image1 from "../../Image/roadbanner.webp";
 import image2 from "../../Image/target.avif";
 const Milestone = () => {
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  },[])
   return (
     <>
       <div>

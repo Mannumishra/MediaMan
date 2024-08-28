@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./whychoose.css";
 function WhyChooseUs() {
   const whychoose = [
@@ -44,6 +44,13 @@ Blockbuster: Premium charges of 50%-150% on rate cards, applicable for ads less 
       desc: `At MediaMen Advertising, we offer cost-effective cinema advertising solutions to help you reach a targeted audience in a captivating environment. Our expertise ensures optimal placement and budget management, guaranteeing you the best rates and impactful results`,
     },
   ];
+
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  },[])
   return (
     <>
       <div class="feat bg-gray pt-5 pb-5">
