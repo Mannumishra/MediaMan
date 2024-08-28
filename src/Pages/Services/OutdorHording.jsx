@@ -134,6 +134,11 @@ function OutdoorHording() {
     return title;
   };
 
+  const clearFilters = () => {
+    setSelectedMedia('');
+    setSelectedState('');
+    setSelectedCity('');
+  };
   return (
     <>
       {fullloading ? <Loader /> : (
@@ -161,22 +166,16 @@ function OutdoorHording() {
               </div>
               {isFilterVisible && (
                 <div className="col-md-12">
-                  <div className="filteration mb-3">
-                    <div>
-                      {/* <label
-                      htmlFor="mediaSelect"
-                      style={{ fontSize: "14px", color: "black" }}
-                      className="form-label"
-                    >
-                      Select Media
-                    </label> */}
+                  <div className="row mb-3">
+                    <div className="col-md col-4">
+                      <label htmlFor="">Media</label>
                       <select
                         id="mediaSelect"
                         className="form-select"
                         value={selectedMedia}
                         onChange={(e) => setSelectedMedia(e.target.value)}
                       >
-                        <option value="">Select Media</option>
+                        {/* <option value="">Select Media</option> */}
                         {[...new Set(data.map(item => item.media))].map((media, index) => (
                           <option key={index} value={media}>
                             {media}
@@ -184,21 +183,15 @@ function OutdoorHording() {
                         ))}
                       </select>
                     </div>
-                    <div>
-                      {/* <label
-                      htmlFor="stateSelect"
-                      style={{ fontSize: "14px", color: "black" }}
-                      className="form-label"
-                    >
-                      Select State
-                    </label> */}
+                    <div className="col-md col-4">
+                      <label htmlFor="">State</label>
                       <select
                         className="form-select"
                         aria-label="State select"
                         value={selectedState}
                         onChange={(e) => setSelectedState(e.target.value)}
                       >
-                        <option value="">Select State</option>
+                        {/* <option value="">Select State</option> */}
                         {[...new Set(data.map(item => item.state))].map((state, index) => (
                           <option key={index} value={state}>
                             {state}
@@ -206,21 +199,15 @@ function OutdoorHording() {
                         ))}
                       </select>
                     </div>
-                    <div>
-                      {/* <label
-                      htmlFor="citySelect"
-                      style={{ fontSize: "14px", color: "black" }}
-                      className="form-label"
-                    >
-                      Select City
-                    </label> */}
+                    <div className="col-md col-4">
+                      <label htmlFor="">City</label>
                       <select
                         id="citySelect"
                         className="form-select"
                         value={selectedCity}
                         onChange={(e) => setSelectedCity(e.target.value)}
                       >
-                        <option value="">Select City</option>
+                        {/* <option value="">Select City</option> */}
                         {[...new Set(data.map(item => item.city))].map((city, index) => (
                           <option key={index} value={city}>
                             {city}
@@ -228,7 +215,11 @@ function OutdoorHording() {
                         ))}
                       </select>
                     </div>
-
+                    <div className=" col-md col-12 mt-2 mt-md-0 text-center">
+                      <button className="cssbuttons-io mt-4" onClick={clearFilters}>
+                        <span>Clear Filters</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

@@ -170,13 +170,14 @@ function Cinema() {
             <div className="col-md-12">
               <div className=" mb-3 row justify-center">
                 <div className="col-md col-4">
+                  <label htmlFor="">Cinema Chain</label>
                   <select
                     className="form-select"
                     aria-label="Cinema Chain select"
                     value={selectedChain}
                     onChange={(e) => setSelectedChain(e.target.value)}
                   >
-                    <option value="">Select Cinema Chain</option>
+                    {/* <option value="">Select Cinema Chain</option> */}
                     {cinemaChains.map((chain, index) => (
                       <option key={index} value={chain}>
                         {chain}
@@ -185,13 +186,14 @@ function Cinema() {
                   </select>
                 </div>
                 <div className="col-md col-4">
+                <label htmlFor="">State</label>
                   <select
                     className="form-select"
                     aria-label="State select"
                     value={selectedState}
                     onChange={(e) => setSelectedState(e.target.value)}
                   >
-                    <option value="">Select State</option>
+                    {/* <option value="">Select State</option> */}
                     {states.map((state, index) => (
                       <option key={index} value={state}>
                         {state}
@@ -200,13 +202,14 @@ function Cinema() {
                   </select>
                 </div>
                 <div className="col-md col-4">
+                <label htmlFor="">City</label>
                   <select
                     id="citySelect"
                     className="form-select"
                     value={selectedCity}
                     onChange={(e) => setSelectedCity(e.target.value)}
                   >
-                    <option value="">Select a city</option>
+                    {/* <option value="">Select a city</option> */}
                     {cities.map((city, index) => (
                       <option key={index} value={city}>
                         {city}
@@ -216,7 +219,7 @@ function Cinema() {
                 </div>
                 {/* Clear Filters Button */}
                 <div className=" col-md col-12 mt-2 mt-md-0 text-center">
-                  <button className="cssbuttons-io" onClick={clearFilters}>
+                  <button className="cssbuttons-io mt-4" onClick={clearFilters}>
                     <span>Clear Filters</span>
                   </button>
                 </div>
