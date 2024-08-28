@@ -86,19 +86,14 @@
   /* height: 140px; */
   padding: 20px 18px;
   border-radius: 20px;
-  /* background-color: darkslategray; */
+  background-color: darkslategray;
 
-  color: black;
+  color: #ffffff;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-}
-
-.card-black:hover{
-  background-color: #EC2027;
-  color: white;
 }
 
 /* .card-content {
