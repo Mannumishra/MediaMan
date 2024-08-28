@@ -177,7 +177,7 @@ function RadioAdvertisement() {
                           value={selectedState}
                           onChange={handleStateChange}
                         >
-                          <option value="">Select State</option>
+                          <option value=""></option>
                           {states.map((state, index) => (
                             <option key={index} value={state}>
                               {state}
@@ -200,7 +200,7 @@ function RadioAdvertisement() {
                             value={selectedCity}
                             onChange={handleCityChange}
                           >
-                            <option value="">Select City</option>
+                            <option value=""></option>
                             {cities.map((city, index) => (
                               <option key={index} value={city}>
                                 {city}

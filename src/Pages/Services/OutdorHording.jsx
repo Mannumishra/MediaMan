@@ -175,7 +175,7 @@ function OutdoorHording() {
                         value={selectedMedia}
                         onChange={(e) => setSelectedMedia(e.target.value)}
                       >
-                        {/* <option value="">Select Media</option> */}
+                        <option value=""></option>
                         {[...new Set(data.map(item => item.media))].map((media, index) => (
                           <option key={index} value={media}>
                             {media}
@@ -191,7 +191,7 @@ function OutdoorHording() {
                         value={selectedState}
                         onChange={(e) => setSelectedState(e.target.value)}
                       >
-                        {/* <option value="">Select State</option> */}
+                        <option value=""></option>
                         {[...new Set(data.map(item => item.state))].map((state, index) => (
                           <option key={index} value={state}>
                             {state}
@@ -207,7 +207,7 @@ function OutdoorHording() {
                         value={selectedCity}
                         onChange={(e) => setSelectedCity(e.target.value)}
                       >
-                        {/* <option value="">Select City</option> */}
+                        <option value=""></option>
                         {[...new Set(data.map(item => item.city))].map((city, index) => (
                           <option key={index} value={city}>
                             {city}

@@ -177,7 +177,7 @@ function Cinema() {
                     value={selectedChain}
                     onChange={(e) => setSelectedChain(e.target.value)}
                   >
-                    {/* <option value="">Select Cinema Chain</option> */}
+                    <option value=""></option>
                     {cinemaChains.map((chain, index) => (
                       <option key={index} value={chain}>
                         {chain}
@@ -193,7 +193,7 @@ function Cinema() {
                     value={selectedState}
                     onChange={(e) => setSelectedState(e.target.value)}
                   >
-                    {/* <option value="">Select State</option> */}
+                    <option value=""></option>
                     {states.map((state, index) => (
                       <option key={index} value={state}>
                         {state}
@@ -209,7 +209,7 @@ function Cinema() {
                     value={selectedCity}
                     onChange={(e) => setSelectedCity(e.target.value)}
                   >
-                    {/* <option value="">Select a city</option> */}
+                    <option value=""></option>
                     {cities.map((city, index) => (
                       <option key={index} value={city}>
                         {city}
