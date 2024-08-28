@@ -28,9 +28,9 @@ const Footer = () => {
                   <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-170434">
                     <Link to={"/why-we-choose"}><i class="bi bi-chevron-double-right"></i> About Us</Link>
                   </li>
-                  <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                  {/* <li class="menu-item menu-item-type-post_type menu-item-object-page">
                     <Link to={"/"}><i class="bi bi-chevron-double-right"></i> Our Services</Link>
-                  </li>
+                  </li> */}
                   <li class="menu-item menu-item-type-post_type menu-item-object-page">
                     <Link to={"/blog"}><i class="bi bi-chevron-double-right"></i> Blog</Link>
                   </li>

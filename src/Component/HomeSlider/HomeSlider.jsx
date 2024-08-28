@@ -22,15 +22,15 @@ function HomeSlider() {
 
   const navigate = useNavigate();
 
-  const handleStateClick = (stateName) => {
-    const baseUrl = '/cinema';
-    const queryParams = new URLSearchParams({
-        state: stateName,
-        anotherParam: 'value', // Add more parameters if needed
-    }).toString();
+  // const handleStateClick = (stateName) => {
+  //   const baseUrl = '/cinema';
+  //   const queryParams = new URLSearchParams({
+  //       state: stateName,
+  //       anotherParam: 'value', // Add more parameters if needed
+  //   }).toString();
 
-    navigate(`${baseUrl}?${queryParams}`);
-  };
+  //   navigate(`${baseUrl}?${queryParams}`);
+  // };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -95,7 +95,7 @@ function HomeSlider() {
           {stateData.map((state, index) => (
             <div className="col-6 col-md-2 mb-4" key={index}>
               <div className="statesforhomepage text-center">
-                <div className="card-body" onClick={() => handleStateClick(state.name)}>
+                <div className="card-body" >
                   <img className="mb-2" src={state.picture} alt="" />
                   <h5 className="card-title">{state.name}</h5>
                 </div>
