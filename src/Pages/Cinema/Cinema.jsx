@@ -170,7 +170,7 @@ function Cinema() {
             <div className="col-md-12">
               <div className=" mb-3 row justify-center">
                 <div className="col-md col-4">
-                  <label htmlFor="">Cinema Chain</label>
+                  <label htmlFor="">Cinema</label>
                   <select
                     className="form-select"
                     aria-label="Cinema Chain select"
